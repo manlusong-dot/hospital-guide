@@ -1,0 +1,155 @@
+/* ---------- 起止点 picker 行 ---------- */
+.picker-card {
+  padding: 12rpx 32rpx;
+}
+
+.picker-row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #EFEFF0;
+}
+
+.picker-row:last-of-type {
+  border-bottom: none;
+}
+
+.picker-label {
+  width: 64rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1C1C1E;
+}
+
+.picker-value {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 32rpx;
+  color: #1C1C1E;
+}
+
+.picker-chevron {
+  color: #C7C7CC;
+  font-size: 40rpx;
+  font-weight: 300;
+}
+
+/* ---------- 地图卡 ---------- */
+.map-card {
+  padding-bottom: 24rpx;
+}
+
+.voice-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8rpx 8rpx 16rpx;
+}
+
+.voice-label {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #1C1C1E;
+}
+
+.floor-tabs {
+  display: flex;
+  background: #E5E5EA;
+  border-radius: 16rpx;
+  padding: 4rpx;
+  margin-bottom: 20rpx;
+}
+
+.floor-tab {
+  flex: 1;
+  text-align: center;
+  padding: 18rpx 0;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  color: #3A3A3C;
+}
+
+.floor-tab.active {
+  background: #ffffff;
+  color: #1C1C1E;
+  font-weight: 600;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.floor-tab.has-route {
+  color: #FF3B30;
+  font-weight: 600;
+}
+
+.map-canvas {
+  width: 100%;
+  height: 460rpx;
+  border-radius: 20rpx;
+  background: #F2F2F7;
+}
+
+.map-hint {
+  margin-top: 16rpx;
+  text-align: center;
+}
+
+/* ---------- 路线指引 ---------- */
+.route-summary {
+  background: #E3F0FF;
+  border-radius: 20rpx;
+  padding: 20rpx 24rpx;
+  margin: 16rpx 0;
+}
+
+.route-distance {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1C1C1E;
+}
+
+.route-fromto {
+  margin-top: 4rpx;
+}
+
+.step-line {
+  display: flex;
+  align-items: flex-start;
+  padding: 14rpx 0;
+}
+
+.step-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #007AFF;
+  margin: 18rpx 18rpx 0 6rpx;
+  flex-shrink: 0;
+}
+
+.step-notice {
+  display: block;
+  margin-top: 6rpx;
+  font-size: 28rpx;
+  color: #FF9500;
+  line-height: 1.5;
+}
+
+.btn-row {
+  display: flex;
+  margin-top: 12rpx;
+}
+
+.btn-row-item {
+  flex: 1;
+  margin: 0 6rpx;
+}
+
+.btn-row-item:first-child {
+  margin-left: 0;
+}
+
+.btn-row-item:last-child {
+  margin-right: 0;
+}

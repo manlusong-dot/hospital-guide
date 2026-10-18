@@ -1,0 +1,219 @@
+.dept-row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #EFEFF0;
+}
+
+.dept-row:last-child {
+  border-bottom: none;
+}
+
+.dept-name {
+  font-size: 34rpx;
+  font-weight: 600;
+  color: #1C1C1E;
+}
+
+.chevron-dark {
+  color: #C7C7CC;
+  font-size: 44rpx;
+  font-weight: 300;
+  margin-left: 16rpx;
+}
+
+/* ---------- 科室头部 ---------- */
+.dept-header {
+  /* 去掉原顶部蓝条 */
+}
+
+.dept-floor-tag {
+  display: inline-block;
+  background: #E3F0FF;
+  color: #007AFF;
+  font-size: 24rpx;
+  padding: 6rpx 18rpx;
+  border-radius: 999rpx;
+  margin-bottom: 16rpx;
+}
+
+.dept-floor-text {
+  margin: 8rpx 0 8rpx;
+  color: #3A3A3C;
+}
+
+/* ---------- 当前步骤 ---------- */
+.step-now-label {
+  font-size: 26rpx;
+  color: #007AFF;
+  font-weight: 600;
+  margin-bottom: 12rpx;
+}
+
+.step-desc {
+  margin: 16rpx 0;
+}
+
+.tip-item {
+  background: #FFF4E5;
+  border-radius: 16rpx;
+  padding: 18rpx 22rpx;
+  margin: 12rpx 0;
+  font-size: 30rpx;
+  color: #B25E00;
+  line-height: 1.5;
+}
+
+.step-btn-row {
+  margin-top: 16rpx;
+}
+
+.next-btn {
+  margin-left: 16rpx;
+}
+
+.completed-banner {
+  margin-top: 18rpx;
+  padding: 18rpx 20rpx;
+  border-radius: 14rpx;
+  background: #E8F7EE;
+  color: #248A3D;
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+.completion-mask {
+  position: fixed;
+  z-index: 20;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48rpx;
+  background: rgba(0, 0, 0, 0.42);
+}
+
+.completion-modal {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 42rpx 32rpx 30rpx;
+  border-radius: 24rpx;
+  background: #FFFFFF;
+  text-align: center;
+}
+
+.completion-icon {
+  width: 92rpx;
+  height: 92rpx;
+  margin: 0 auto 18rpx;
+  border-radius: 50%;
+  background: #34C759;
+  color: #FFFFFF;
+  font-size: 58rpx;
+  line-height: 92rpx;
+}
+
+.completion-title {
+  margin-bottom: 14rpx;
+}
+
+.completion-text {
+  margin-bottom: 24rpx;
+  text-align: left;
+}
+
+.completion-close {
+  margin-top: 14rpx;
+}
+
+.exam-order-panel {
+  margin-top: 20rpx;
+  padding-top: 16rpx;
+  border-top: 1rpx solid #EFEFF0;
+}
+
+.exam-order-notice {
+  color: #8A4B08;
+  margin-bottom: 12rpx;
+}
+
+.exam-order-input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 76rpx;
+  padding: 18rpx 20rpx;
+  margin-bottom: 14rpx;
+  border: 1rpx solid #D1D1D6;
+  border-radius: 12rpx;
+  background: #F8F8FA;
+  color: #1C1C1E;
+}
+
+/* ---------- 全部流程时间线 ---------- */
+.section-title {
+  margin-bottom: 12rpx;
+}
+
+.step-row {
+  display: flex;
+  align-items: flex-start;
+  padding: 20rpx 0;
+}
+
+.step-row.current {
+  background: #E3F0FF;
+  border-radius: 20rpx;
+  padding: 20rpx;
+  margin: 0 -8rpx;
+}
+
+.step-row.done {
+  opacity: 0.55;
+}
+
+.step-no {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: #E5E5EA;
+  color: #6D6D72;
+  font-size: 28rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.step-row.current .step-no {
+  background: #007AFF;
+  color: #ffffff;
+}
+
+.step-row.done .step-no {
+  background: #34C759;
+  color: #ffffff;
+}
+
+.step-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1C1C1E;
+}
+
+.step-poi {
+  color: #248A3D;
+  margin-top: 4rpx;
+}
+
+/* ---------- 检查前须知 ---------- */
+.prep-item {
+  margin: 18rpx 0;
+}
+
+.prep-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1C1C1E;
+}

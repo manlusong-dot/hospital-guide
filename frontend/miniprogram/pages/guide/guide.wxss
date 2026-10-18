@@ -1,0 +1,15 @@
+.guide-card {
+  /* 去掉原左侧蓝条，仅靠间距分组 */
+}
+
+.guide-title {
+  margin-top: 12rpx;
+}
+
+.guide-content {
+  margin-top: 16rpx;
+}
+
+.exam-duration {
+  margin-top: 8rpx;
+}

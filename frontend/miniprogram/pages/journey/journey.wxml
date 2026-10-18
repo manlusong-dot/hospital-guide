@@ -1,0 +1,74 @@
+<view class="page">
+  <view class="card" wx:if="{{showPicker}}">
+    <view class="title-2">请选择就诊科室</view>
+    <view class="dept-row" wx:for="{{deptList}}" wx:key="id" bindtap="pickDept" data-index="{{index}}">
+      <view class="flex-1">
+        <view class="dept-name">{{item.name}}</view>
+        <view class="footnote">{{item.floor}} 楼 · {{item.intro}}</view>
+      </view>
+      <view class="chevron-dark">›</view>
+    </view>
+  </view>
+
+  <block wx:if="{{card}}">
+    <view class="card dept-header">
+      <view class="dept-floor-tag">就诊科室</view>
+      <view class="large-title dept-name">{{card.dept.name}}</view>
+      <view class="body dept-floor-text">在 {{card.dept.floor}} 楼</view>
+      <view class="btn-primary" wx:if="{{placeTarget}}" bindtap="goNavigate">带我去 {{placeLabel}}</view>
+      <view class="btn-secondary" style="margin-top:16rpx;" bindtap="goChat">问问就医助手</view>
+    </view>
+
+    <view class="card" wx:if="{{step}}">
+      <view class="step-now-label">第 {{step.index + 1}} 步 / 共 {{step.total}} 步</view>
+      <view class="title-1">{{step.title}}</view>
+      <view class="body step-desc">{{step.desc}}</view>
+      <view class="tip-item" wx:for="{{step.tips}}" wx:key="index">{{item}}</view>
+      <view wx:if="{{step.key === 'exam'}}" class="exam-order-panel">
+        <view class="body exam-order-notice">仅填写医生已经开具的检查项目，AI不会根据症状安排检查。</view>
+        <input class="exam-order-input" value="{{examOrderText}}" bindinput="onExamOrderInput" placeholder="如：血常规、腹部B超" />
+        <view class="btn-secondary" bindtap="saveExamOrders">保存医生检查单</view>
+      </view>
+      <view class="completed-banner" wx:if="{{readOnly}}">本次就诊已完成，可查看上一次的流程记录。</view>
+      <view class="row step-btn-row" wx:if="{{!readOnly && step.index + 1 < step.total}}">
+        <view class="btn-secondary flex-1" bindtap="prevStep">上一步</view>
+        <view class="btn-primary flex-1 next-btn" bindtap="nextStep">完成这一步</view>
+      </view>
+      <view class="row step-btn-row" wx:if="{{!readOnly && step.index + 1 === step.total}}">
+        <view class="btn-secondary flex-1" bindtap="prevStep">上一步</view>
+        <view class="btn-primary flex-1 next-btn" bindtap="finishJourney">完成本次就诊</view>
+      </view>
+    </view>
+
+    <view class="card">
+      <view class="title-2 section-title">全部流程</view>
+      <view class="step-row {{step && step.index === index ? 'current' : ''}} {{state && state.done_keys.length > index ? 'done' : ''}}"
+            wx:for="{{card.steps}}" wx:key="key">
+        <view class="step-no">{{index + 1}}</view>
+        <view class="flex-1">
+          <view class="step-title">{{item.title}}</view>
+          <view class="footnote">{{item.desc}}</view>
+          <view class="footnote step-poi" wx:if="{{item.poi}}">📍 {{item.poi}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="card" wx:if="{{card.exam_prep.length > 0}}">
+      <view class="title-2 section-title">检查前须知</view>
+      <view class="prep-item" wx:for="{{card.exam_prep}}" wx:key="id">
+        <view class="prep-name">{{item.exam_name}} <text wx:if="{{item.fasting}}" class="tag tag-warn">需空腹</text></view>
+        <view class="footnote">{{item.prep_text}}</view>
+      </view>
+    </view>
+  </block>
+
+  <view class="completion-mask" wx:if="{{showCompleteModal}}" bindtap="closeCompleteModal">
+    <view class="completion-modal" catchtap="stopModalTap">
+      <view class="completion-icon">✓</view>
+      <view class="title-1 completion-title">本次就诊已完成</view>
+      <view class="body completion-text">请按医生安排及时复查，如有不适或症状加重，请及时就医。</view>
+      <view class="btn-primary" bindtap="goMyRecords">查看我的挂号记录</view>
+      <view class="btn-secondary completion-close" bindtap="closeCompleteModal">知道了</view>
+    </view>
+  </view>
+</view>

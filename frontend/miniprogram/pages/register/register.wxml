@@ -1,0 +1,87 @@
+<view class="page">
+  <view class="card form-card">
+    <view class="title-2 section-title">挂号信息</view>
+    <view class="form-row">
+      <view class="form-label">就诊人</view>
+      <input class="form-input" placeholder="请输入姓名" value="{{patientName}}" bindinput="onNameInput" />
+    </view>
+    <view class="form-row">
+      <view class="form-label">科室</view>
+      <picker mode="selector" range="{{deptList}}" range-key="name" value="{{deptIndex}}" bindchange="onDeptChange">
+        <view class="form-picker">
+          <text>{{deptList[deptIndex].name || '请选择'}}</text>
+          <view class="picker-chevron">›</view>
+        </view>
+      </picker>
+    </view>
+    <view class="form-row">
+      <view class="form-label">日期</view>
+      <picker mode="selector" range="{{dates}}" range-key="label" value="{{dateIndex}}" bindchange="onDateChange">
+        <view class="form-picker">
+          <text>{{dates[dateIndex].label}}</text>
+          <view class="picker-chevron">›</view>
+        </view>
+      </picker>
+    </view>
+    <view class="form-row">
+      <view class="form-label">时段</view>
+      <picker mode="selector" range="{{slots}}" value="{{slotIndex}}" bindchange="onSlotChange">
+        <view class="form-picker">
+          <text>{{slots[slotIndex]}}</text>
+          <view class="picker-chevron">›</view>
+        </view>
+      </picker>
+    </view>
+    <view class="btn-primary" bindtap="submit">确认挂号</view>
+    <view class="footnote tip-demo">这是演示流程，不会产生真实费用</view>
+  </view>
+
+  <view class="card">
+    <view class="title-2 section-title">选择医生</view>
+    <view class="doctor-row {{doctorIndex === index ? 'selected' : ''}}"
+          wx:for="{{doctorList}}" wx:key="id" bindtap="pickDoctor" data-index="{{index}}">
+      <view class="flex-1">
+        <view class="doctor-name">{{item.name}} <text class="doctor-title">{{item.title}}</text></view>
+        <view class="footnote">出诊：{{item.schedule_text}}</view>
+        <view class="footnote doctor-intro">{{item.intro}}</view>
+      </view>
+      <view class="tag {{doctorIndex === index ? 'tag-success' : ''}}">{{doctorIndex === index ? '已选' : '选择'}}</view>
+    </view>
+    <view class="footnote empty-hint" wx:if="{{doctorList.length === 0}}">该科室暂无演示医生</view>
+  </view>
+
+  <view class="card result-card" wx:if="{{result}}">
+    <view class="result-icon">✓</view>
+    <view class="title-2 result-title">挂号成功</view>
+    <view class="result-row">
+      <view class="footnote">挂号号</view>
+      <view class="body">{{result.registration_id}}</view>
+    </view>
+    <view class="result-row">
+      <view class="footnote">就诊人</view>
+      <view class="body">{{result.patient_name}}</view>
+    </view>
+    <view class="result-row">
+      <view class="footnote">科室 / 医生</view>
+      <view class="body">{{result.dept}} · {{result.doctor}}</view>
+    </view>
+    <view class="result-row">
+      <view class="footnote">就诊时间</view>
+      <view class="body">{{result.visit_date}} {{result.slot}}</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="title-2 section-title">挂号记录</view>
+    <view class="record-row" wx:for="{{records}}" wx:key="id">
+      <view class="flex-1">
+        <view class="body">{{item.dept_name}} · {{item.doctor_name}}</view>
+        <view class="footnote">{{item.visit_date}} {{item.slot}} · {{item.journey_status}}</view>
+      </view>
+      <view class="tag">{{item.floor}}F</view>
+      <view class="record-action" wx:if="{{item.can_enter}}" bindtap="enterJourney" data-index="{{index}}">{{item.journey_completed ? '查看流程' : '进入流程'}}</view>
+      <view class="footnote record-disabled" wx:else>预约已过期</view>
+    </view>
+    <view class="footnote empty-hint" wx:if="{{records.length === 0}}">还没有挂号记录</view>
+  </view>
+</view>

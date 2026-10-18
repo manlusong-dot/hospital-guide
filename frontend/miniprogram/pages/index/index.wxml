@@ -1,0 +1,64 @@
+<view class="page">
+  <view class="home-header">
+    <view class="large-title">看病不迷路</view>
+    <view class="header-sub">深圳大学医院 · 就医陪伴助手</view>
+  </view>
+
+  <view class="ai-row" bindtap="goChat">
+    <view class="ai-badge">AI</view>
+    <view class="flex-1">
+      <view class="headline">AI 就医助手</view>
+      <view class="footnote">说说哪里不舒服，我帮您选科室、排流程</view>
+    </view>
+    <view class="chevron">›</view>
+  </view>
+
+  <view class="grid">
+    <view class="grid-item" bindtap="goChat">
+      <view class="grid-icon icon-blue">导</view>
+      <view class="grid-text">智能导诊</view>
+      <view class="grid-hint">不知道挂哪个科</view>
+    </view>
+    <view class="grid-item" bindtap="goNavigate">
+      <view class="grid-icon icon-green">航</view>
+      <view class="grid-text">院内导航</view>
+      <view class="grid-hint">去科室怎么走</view>
+    </view>
+    <view class="grid-item" bindtap="goJourney">
+      <view class="grid-icon icon-orange">流</view>
+      <view class="grid-text">就诊流程</view>
+      <view class="grid-hint">下一步做什么</view>
+    </view>
+    <view class="grid-item" bindtap="goGuide">
+      <view class="grid-icon icon-purple">药</view>
+      <view class="grid-text">用药须知</view>
+      <view class="grid-hint">药怎么吃、检查前注意</view>
+    </view>
+    <view class="grid-item" bindtap="goRegister">
+      <view class="grid-icon icon-red">挂</view>
+      <view class="grid-text">预约挂号</view>
+      <view class="grid-hint">选医生挂号</view>
+    </view>
+    <view class="grid-item" bindtap="goMy">
+      <view class="grid-icon icon-gray">我</view>
+      <view class="grid-text">我的</view>
+      <view class="grid-hint">挂号记录</view>
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="title-2">温馨提示</view>
+    <view class="tip-line">
+      <view class="tip-dot"></view>
+      <view class="body">看病请带好：身份证、医保卡、病历本</view>
+    </view>
+    <view class="tip-line">
+      <view class="tip-dot"></view>
+      <view class="body">抽血和腹部 B 超要空腹，记得别吃早饭</view>
+    </view>
+    <view class="tip-line">
+      <view class="tip-dot"></view>
+      <view class="body">第一次来先到 1 楼挂号收费处办就诊卡</view>
+    </view>
+  </view>
+</view>

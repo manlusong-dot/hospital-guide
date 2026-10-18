@@ -1,0 +1,145 @@
+<view class="page chat-page">
+  <view class="segmented chat-seg">
+    <view class="segmented-item {{mode === 'chat' ? 'active' : ''}}" bindtap="switchMode" data-mode="chat">对话咨询</view>
+    <view class="segmented-item {{mode === 'triage' ? 'active' : ''}}" bindtap="switchMode" data-mode="triage">智能导诊</view>
+  </view>
+
+  <block wx:if="{{mode === 'triage'}}">
+    <view class="card">
+      <view class="title-2">请描述不舒服的情况</view>
+      <input class="symptom-input" placeholder="例如：牙疼两天了，晚上疼得睡不着" value="{{symptomText}}" bindinput="onSymptomInput" maxlength="200" confirm-type="send" bindconfirm="startTriage" />
+      <view class="btn-primary" bindtap="startTriage">开始导诊</view>
+    </view>
+
+    <view class="card" wx:if="{{triageResult}}">
+      <view class="title-2">建议科室</view>
+      <view class="urgent-box" wx:if="{{triageResult.urgent_warning && triageResult.urgent_warning.is_emergency}}">
+        <view class="title-2">急症提示</view>
+        <view class="body">{{triageResult.urgent_warning.message}}</view>
+      </view>
+      <view class="dept-box" wx:if="{{triageResult.dept}}">
+        <view class="title-1 dept-name">{{triageResult.dept.name}}</view>
+        <view class="body">在 {{triageResult.dept.floor}} 楼 · {{triageResult.dept.intro}}</view>
+        <view class="footnote dept-suggest">{{triageResult.suggestion}}</view>
+      </view>
+      <view class="dept-box" wx:else>
+        <view class="title-2">需要人工确认</view>
+        <view class="body">{{triageResult.suggestion}}</view>
+        <view class="footnote" wx:if="{{triageResult.match_reason_text}}">匹配依据：{{triageResult.match_reason_text}}</view>
+        <view class="candidate-row" wx:for="{{triageResult.candidates}}" wx:key="id" bindtap="pickCandidate" data-index="{{index}}">
+          <view class="flex-1">
+            <view class="title-2">{{item.name}}</view>
+            <view class="footnote">匹配分 {{item.score}} · {{item.reason_text}}</view>
+          </view>
+          <view class="chevron-dark">›</view>
+        </view>
+        <view class="footnote" wx:if="{{triageResult.candidates.length === 0}}">暂未找到足够依据，请补充主要症状、持续时间和年龄。</view>
+      </view>
+      <view wx:if="{{triageResult.exam_prep.length > 0}}" class="prep-box">
+        <view class="title-2 prep-title">检查前注意</view>
+        <view class="body prep-line" wx:for="{{triageResult.exam_prep}}" wx:key="id">{{item.exam_name}}：{{item.prep_text}}</view>
+      </view>
+      <view wx:if="{{triageResult.alternatives.length > 0}}" class="alt-box">
+        <view class="footnote">不确定？也可以选：</view>
+        <view class="tag alt-tag" wx:for="{{triageResult.alternatives}}" wx:key="id" bindtap="pickAlternative" data-index="{{index}}">{{item.name}}</view>
+      </view>
+      <block wx:if="{{triageResult.dept}}">
+        <view class="btn-primary" bindtap="makeJourneyCard">生成就诊流程卡</view>
+        <view class="btn-secondary" bindtap="goNavigateToDept">带我去这个科室</view>
+      </block>
+    </view>
+  </block>
+
+  <block wx:if="{{mode === 'chat'}}">
+    <view class="msg-list">
+      <view class="msg {{item.role === 'user' ? 'msg-user' : 'msg-ai'}}" wx:for="{{messages}}" wx:key="index">
+        <view class="msg-text">{{item.text}}</view>
+        <view class="msg-nav" wx:if="{{item.navigation}}" bindtap="goMessageNavigate" data-index="{{index}}">
+          <text>一键导航到{{item.navigation.label}}</text><text class="msg-nav-arrow">›</text>
+        </view>
+        <view class="msg-nav-note" wx:if="{{item.navigation && item.navigation.kind === 'department'}}">{{item.navigation.notice}}</view>
+      </view>
+      <view class="msg msg-ai" wx:if="{{loading}}">
+        <view class="msg-text">正在思考中...</view>
+      </view>
+    </view>
+
+    <view class="step-bar" wx:if="{{lastStep}}">
+      <view class="step-progress">
+        <text class="step-label">就诊进度</text>
+        <text class="step-num">第{{lastStep.index + 1}}步 / 共{{lastStep.total}}步</text>
+      </view>
+      <view class="step-title">{{lastStep.title}}</view>
+      <view class="step-desc">{{lastStep.desc}}</view>
+      <view class="step-tips" wx:if="{{lastStep.tips.length > 0}}">
+        <text class="step-tips-label">提示：</text>
+        <text wx:for="{{lastStep.tips}}" wx:key="index" class="step-tip-item">{{item}}</text>
+      </view>
+      <view class="step-action" wx:if="{{lastStep.index + 1 !== lastStep.total}}" bindtap="nextStep">
+        <view class="step-action-main">完成这一步</view>
+        <view class="step-action-next">进入下一步 ›</view>
+      </view>
+      <view class="step-action step-action-finish" wx:if="{{lastStep.index >= lastStep.total - 1}}" bindtap="nextStep">
+        <view class="step-action-main">完成本次就诊</view>
+        <view class="step-action-next">结束流程 ›</view>
+      </view>
+    </view>
+
+    <view class="quick-bar">
+      <view class="tag quick-chip" wx:for="{{quickChips}}" wx:key="index" bindtap="tapChip" data-text="{{item}}">{{item}}</view>
+    </view>
+
+    <view class="input-bar">
+      <input class="chat-input" placeholder="跟我说说您的问题" placeholder-class="ph" value="{{inputText}}" bindinput="onChatInput" confirm-type="send" bindconfirm="sendCurrent" />
+      <view class="send-btn" bindtap="sendCurrent">发送</view>
+    </view>
+
+    <view class="chat-actions">
+      <view class="chat-action" bindtap="goJourney">
+        <view class="chat-action-icon action-blue">⌁</view>
+        <view class="chat-action-copy">
+          <view class="chat-action-title">查看就诊流程</view>
+          <view class="chat-action-desc">查看完整步骤和路线</view>
+        </view>
+        <view class="chat-action-arrow">›</view>
+      </view>
+      <view class="chat-action" bindtap="showHistory">
+        <view class="chat-action-icon action-purple">◷</view>
+        <view class="chat-action-copy">
+          <view class="chat-action-title">就诊记录</view>
+          <view class="chat-action-desc">继续之前的就诊记录</view>
+        </view>
+        <view class="chat-action-arrow">›</view>
+      </view>
+      <view class="chat-action" bindtap="startNewVisit">
+        <view class="chat-action-icon action-green">＋</view>
+        <view class="chat-action-copy">
+          <view class="chat-action-title">开始新就诊</view>
+          <view class="chat-action-desc">重新描述症状并安排流程</view>
+        </view>
+        <view class="chat-action-arrow">›</view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 就诊记录弹窗 -->
+  <view class="history-mask" wx:if="{{showHistory}}" bindtap="hideHistory"></view>
+  <view class="history-popup" wx:if="{{showHistory}}">
+    <view class="history-header">
+      <text class="history-title">就诊记录</text>
+      <text class="history-close" bindtap="hideHistory">✕</text>
+    </view>
+    <view class="history-list">
+      <view class="history-item" wx:for="{{historyList}}" wx:key="session_id" bindtap="pickHistory" data-index="{{index}}">
+        <view class="history-item-left">
+          <view class="history-dept">{{item.dept_name}}</view>
+          <view class="history-time">{{item.created_at}}</view>
+        </view>
+        <view class="history-item-right">
+          <text class="tag {{item.finished ? 'tag-success' : 'tag-warn'}}">{{item.finished ? '已完成' : '进行中'}}</text>
+        </view>
+      </view>
+      <view class="footnote empty-hint" wx:if="{{historyList.length === 0}}">还没有就诊记录</view>
+    </view>
+  </view>
+</view>

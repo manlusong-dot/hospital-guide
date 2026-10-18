@@ -1,0 +1,40 @@
+<view class="page">
+  <view class="card form-card">
+    <view class="title-2 section-title">就诊人信息</view>
+    <view class="form-row">
+      <view class="form-label">姓名</view>
+      <input class="form-input" placeholder="请输入就诊人姓名" value="{{patientName}}" bindinput="onNameInput" />
+    </view>
+    <view class="footnote form-tip">填好姓名后，挂号记录会按姓名自动筛选</view>
+  </view>
+
+  <view class="card">
+    <view class="title-2 section-title">挂号记录</view>
+    <view class="record-row" wx:for="{{records}}" wx:key="id">
+      <view class="flex-1">
+        <view class="body">{{item.dept_name}} · {{item.doctor_name}}</view>
+        <view class="footnote">{{item.visit_date}} {{item.slot}} · {{item.journey_status}}</view>
+      </view>
+      <view class="tag">{{item.floor}}F</view>
+      <view class="record-action" wx:if="{{item.can_enter}}" bindtap="enterJourney" data-index="{{index}}">{{item.journey_completed ? '查看流程' : '进入流程'}}</view>
+      <view class="footnote record-disabled" wx:else>预约已过期</view>
+    </view>
+    <view class="footnote empty-hint" wx:if="{{records.length === 0}}">还没有挂号记录</view>
+  </view>
+
+  <view class="card">
+    <view class="title-2 section-title">快捷入口</view>
+    <view class="menu-row" bindtap="goRegister">
+      <view class="flex-1">去挂号</view>
+      <view class="chevron-dark">›</view>
+    </view>
+    <view class="menu-row" bindtap="goJourney">
+      <view class="flex-1">我的就诊流程</view>
+      <view class="chevron-dark">›</view>
+    </view>
+    <view class="menu-row" bindtap="goGuide">
+      <view class="flex-1">用药与检查须知</view>
+      <view class="chevron-dark">›</view>
+    </view>
+  </view>
+</view>

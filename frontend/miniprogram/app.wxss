@@ -1,0 +1,214 @@
+/* ============================================
+   iOS 风全局样式（保留适老化可读性）
+   主色 #007AFF，分组灰底 #F2F2F7，白卡片
+   ============================================ */
+
+page {
+  background: #F2F2F7;
+  color: #1C1C1E;
+  font-size: 32rpx;
+  line-height: 1.65;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Helvetica, sans-serif;
+}
+
+/* ---------- 卡片 ---------- */
+.card {
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin: 24rpx;
+  /* iOS 风：极弱投影，几乎靠底色区分 */
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+/* ---------- 字体层级 ---------- */
+.large-title {
+  font-size: 56rpx;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #1C1C1E;
+}
+
+.title-1 {
+  font-size: 44rpx;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #1C1C1E;
+}
+
+.title-2 {
+  font-size: 36rpx;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #1C1C1E;
+}
+
+.headline {
+  font-size: 34rpx;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #1C1C1E;
+}
+
+.body {
+  font-size: 32rpx;
+  font-weight: 400;
+  line-height: 1.65;
+  color: #1C1C1E;
+}
+
+.callout {
+  font-size: 30rpx;
+  line-height: 1.55;
+  color: #3A3A3C;
+}
+
+.footnote,
+.text-hint {
+  font-size: 28rpx;
+  line-height: 1.45;
+  color: #6D6D72;
+}
+
+/* 兼容旧 class 名 */
+.title-lg { font-size: 44rpx; font-weight: 700; color: #1C1C1E; line-height: 1.3; }
+.title-md { font-size: 36rpx; font-weight: 600; color: #1C1C1E; line-height: 1.35; }
+.text-body { font-size: 32rpx; color: #1C1C1E; line-height: 1.65; }
+
+/* ---------- 按钮 ---------- */
+.btn-primary {
+  background: #007AFF;
+  color: #ffffff;
+  font-size: 34rpx;
+  font-weight: 600;
+  height: 96rpx;
+  line-height: 96rpx;
+  border-radius: 24rpx;
+  text-align: center;
+  margin: 24rpx 0;
+}
+
+.btn-primary.disabled {
+  background: #E5E5EA;
+  color: #8E8E93;
+}
+
+.btn-secondary {
+  background: #E3F0FF;
+  color: #007AFF;
+  font-size: 34rpx;
+  font-weight: 600;
+  height: 96rpx;
+  line-height: 96rpx;
+  border-radius: 24rpx;
+  text-align: center;
+  margin: 24rpx 0;
+}
+
+.btn-danger {
+  background: #FF3B30;
+  color: #ffffff;
+  font-size: 34rpx;
+  font-weight: 600;
+  height: 96rpx;
+  line-height: 96rpx;
+  border-radius: 24rpx;
+  text-align: center;
+  margin: 24rpx 0;
+}
+
+/* ---------- 标签 pill ---------- */
+.tag {
+  display: inline-block;
+  background: #E3F0FF;
+  color: #007AFF;
+  font-size: 26rpx;
+  font-weight: 500;
+  padding: 8rpx 20rpx;
+  border-radius: 999rpx;
+  margin: 8rpx 12rpx 8rpx 0;
+}
+
+.tag-warn {
+  background: #FFF4E5;
+  color: #B25E00;
+}
+
+.tag-success {
+  background: #E8F8EE;
+  color: #248A3D;
+}
+
+.tag-danger {
+  background: #FFEBEA;
+  color: #D70015;
+}
+
+/* ---------- 布局工具 ---------- */
+.row {
+  display: flex;
+  align-items: center;
+}
+
+.row-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.divider {
+  height: 1rpx;
+  background: #EFEFF0;
+  margin: 20rpx 0;
+}
+
+/* ---------- 分段控件（UISegmentedControl 风格） ---------- */
+.segmented {
+  display: flex;
+  background: #E5E5EA;
+  margin: 24rpx;
+  border-radius: 16rpx;
+  padding: 4rpx;
+}
+
+.segmented-item {
+  flex: 1;
+  text-align: center;
+  padding: 20rpx 0;
+  font-size: 30rpx;
+  color: #3A3A3C;
+  border-radius: 12rpx;
+}
+
+.segmented-item.active {
+  background: #ffffff;
+  color: #1C1C1E;
+  font-weight: 600;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+/* ---------- 输入框通用 ---------- */
+.input-base {
+  background: #F2F2F7;
+  border-radius: 20rpx;
+  padding: 22rpx 24rpx;
+  font-size: 32rpx;
+  color: #1C1C1E;
+  box-sizing: border-box;
+}
+
+/* ---------- 列表行 ---------- */
+.list-row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #EFEFF0;
+}
+
+.list-row:last-child {
+  border-bottom: none;
+}

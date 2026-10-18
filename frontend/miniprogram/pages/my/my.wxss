@@ -1,0 +1,83 @@
+.form-card {
+  padding: 12rpx 32rpx;
+}
+
+.section-title {
+  padding-top: 20rpx;
+  margin-bottom: 8rpx;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+}
+
+.form-label {
+  width: 120rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #1C1C1E;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 32rpx;
+  color: #1C1C1E;
+}
+
+.form-tip {
+  padding-bottom: 12rpx;
+}
+
+/* ---------- 记录行 ---------- */
+.record-row {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #EFEFF0;
+}
+
+.record-row:last-child {
+  border-bottom: none;
+}
+
+.record-action {
+  color: #007AFF;
+  font-size: 28rpx;
+  margin-left: 18rpx;
+  white-space: nowrap;
+}
+
+.record-disabled {
+  margin-left: 18rpx;
+  color: #8E8E93;
+  white-space: nowrap;
+}
+
+.empty-hint {
+  text-align: center;
+  padding: 32rpx 0;
+}
+
+/* ---------- 菜单行（iOS 设置列表风格） ---------- */
+.menu-row {
+  display: flex;
+  align-items: center;
+  padding: 26rpx 0;
+  border-bottom: 1rpx solid #EFEFF0;
+  font-size: 32rpx;
+  color: #007AFF;
+}
+
+.menu-row:last-child {
+  border-bottom: none;
+}
+
+.chevron-dark {
+  color: #C7C7CC;
+  font-size: 44rpx;
+  font-weight: 300;
+  margin-left: 16rpx;
+}
+

@@ -1,0 +1,105 @@
+/* ---------- 首页头部（iOS Large Title 风格，白底灰字） ---------- */
+.home-header {
+  padding: 24rpx 40rpx 16rpx;
+}
+
+.header-sub {
+  margin-top: 8rpx;
+  font-size: 30rpx;
+  color: #6D6D72;
+}
+
+/* ---------- AI 入口条 ---------- */
+.ai-row {
+  display: flex;
+  align-items: center;
+  margin: 16rpx 24rpx 8rpx;
+  padding: 28rpx 28rpx;
+  background: #E3F0FF;
+  border-radius: 24rpx;
+}
+
+.ai-badge {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 20rpx;
+  background: #007AFF;
+  color: #ffffff;
+  font-size: 32rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 24rpx;
+}
+
+.chevron {
+  color: #C7C7CC;
+  font-size: 44rpx;
+  font-weight: 300;
+  padding-left: 12rpx;
+}
+
+/* ---------- 2 列宫格 ---------- */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 8rpx 12rpx;
+}
+
+.grid-item {
+  width: calc(50% - 24rpx);
+  box-sizing: border-box;
+  margin: 12rpx;
+  padding: 28rpx 24rpx;
+  background: #ffffff;
+  border-radius: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+.grid-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 20rpx;
+  font-size: 34rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16rpx;
+}
+
+.icon-blue   { background: #E3F0FF; color: #007AFF; }
+.icon-green  { background: #E8F8EE; color: #248A3D; }
+.icon-orange { background: #FFF4E5; color: #B25E00; }
+.icon-purple { background: #F3E8FF; color: #8944AB; }
+.icon-red    { background: #FFEBEA; color: #D70015; }
+.icon-gray   { background: #EBEBEE; color: #4D4D54; }
+
+.grid-text {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1C1C1E;
+}
+
+.grid-hint {
+  font-size: 26rpx;
+  color: #6D6D72;
+  margin-top: 6rpx;
+}
+
+/* ---------- 温馨提示 ---------- */
+.tip-line {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 18rpx;
+}
+
+.tip-dot {
+  width: 14rpx;
+  height: 14rpx;
+  border-radius: 50%;
+  background: #007AFF;
+  margin: 18rpx 16rpx 0 4rpx;
+  flex-shrink: 0;
+}

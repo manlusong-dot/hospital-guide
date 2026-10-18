@@ -1,57 +1,96 @@
-# 就医辅助 hospital-guide
+# 医院就医陪伴小程序（深圳大学医院）
 
-> 就医辅助 就医助手 医院辅助 医疗辅助 就医。融合AI辅助与智能寻路，每个步骤都支持检索和引路。数据来源深圳大学医院公开数据，数据仅用于展示和调试，请勿用于任何非法用途。适用于AI大赛、创新创业大赛等，使用需注明来源，购买版权请联系。
-
-## 效果截图
-
-<img src="截图/01.png" width="230"> <img src="截图/02.png" width="230"> <img src="截图/03.png" width="230">
-<img src="截图/04.png" width="230"> <img src="截图/05.png" width="230"> <img src="截图/06.png" width="230">
-
-## 功能
-
-- 智能导诊：说症状，推荐科室与检查须知
-- 就诊流程卡：12 步全流程（分诊到复诊），每步一键导航
-- 院内导航：平面图上画路线，多楼层自动换乘（电梯/扶梯/楼梯）
-- AI 对话：小米 MiMo 大模型，大白话答疑
-- 用药与检查须知：空腹、憋尿等注意事项大字版
-- 挂号演示：真实医生数据（410 位）本地演示流程
-
-## 快速开始
-
-1. 安装依赖：`pip install -r input/api/requirements.txt`
-2. 配置模型：复制 `.env.example` 为 `.env`，填入大模型 key（OpenAI 兼容接口）
-3. 初始化数据库：`python input/database/init_db.py`
-4. 启动后端：`python -m uvicorn input.api.main:app --reload`（接口文档 http://127.0.0.1:8000/docs）
-5. 微信开发者工具导入 `miniprogram/` 目录（AppID 用测试号即可），编译运行
-
-后端地址在 `miniprogram/utils/config.js`，真机预览改为电脑局域网 IP。环境要求：Python 3.10+、微信开发者工具。
+AI 软件开发大赛项目：面向中老年人和儿童家长的就医全流程陪伴助手。智能导诊、就诊流程卡、院内导航（平面图画路线）、用药与检查须知、AI 大白话答疑、挂号演示。
 
 ## 目录结构
 
+
 ```
-input/       数据与接口层（FastAPI、SQLite、平面图、路网、医生数据）
-asset/       核心层（Dijkstra 多楼层寻路、就诊流程状态机、LLM 编排、路网标注工具）
-miniprogram/ 微信小程序（原生, 7 页面, 适老化大字 UI）
-output/      输出层（透传接口, 见 output/接口约定.md）
-爬虫/        医生数据爬取脚本
+医院辅助/
+├── backend/        后端（服务端全部代码）
+│   ├── api/        FastAPI 服务（19 个 REST 接口）
+│   ├── database/   SQLite：schema.sql / seed_data.py / init_db.py / dao.py
+│   ├── data_source/  平面图、路网标注、爬取的医生数据（换医院只改这里）
+│   ├── ai_core/    就诊流程状态机 + 导诊 + 大模型封装
+│   ├── navigation/ Dijkstra 多楼层寻路（移植 simpleroutingsvg 思路）
+│   ├── crawler/    医生数据爬取脚本
+│   └── .env        大模型配置（不入库,见 .env.example）
+├── frontend/       前端
+│   ├── admin/      Vue 管理端与平面图路网标注工具
+│   └── miniprogram/ 微信小程序（原生,7 页面,适老化 UI）
+├── backend/output/ 输出桥接与下游事件落盘
+├── text/           比赛材料、方案文档与项目说明
+├── README.md
+└── .gitignore
+```
+
+## 环境要求
+
+- Python 3.10+
+- 微信开发者工具（稳定版）
+- Ollama（本地大模型运行环境）或任意 OpenAI 兼容的大模型 API
+
+## 快速开始
+
+1. **安装依赖**
+   ```
+   cd 医院辅助
+   python -m pip install -r backend/api/requirements.txt
+   ```
+
+2. **配置大模型**：
+   - **本地 Ollama（推荐）**：安装 Ollama → 运行 `ollama pull qwen2.5:7b` → 启动 `ollama serve`。项目已提供默认配置（http://127.0.0.1:11434/v1），无需修改 `.env`。
+   - **云端 API**：编辑 `backend/.env`，填入你的 base_url / api_key / model（支持任意 OpenAI 兼容接口）。
+
+3. **初始化数据库**（可重复执行，每次重建）
+   ```
+   python backend/database/init_db.py
+   ```
+   成功会打印各表行数，并提示"科室路网节点校验通过"。
+
+4. **启动后端**
+   请在项目根目录（也就是包含 `backend/`、`frontend/` 的“医院辅助”目录）执行：
+   ```
+   python -m uvicorn backend.api.main:app --reload
+   ```
+   看到 `Uvicorn running on http://127.0.0.1:8000` 即成功。接口文档在 http://127.0.0.1:8000/docs 。
+
+   如果当前已经进入了 `backend/` 目录，请先返回项目根目录再启动：
+   ```
+   cd ..
+   python -m uvicorn backend.api.main:app --reload
+   ```
+   否则 Python 找不到顶层模块 `backend`，会报 `ModuleNotFoundError: No module named 'backend'`。
+
+5. **打开小程序**：微信开发者工具 → 导入项目 → 选 `frontend/miniprogram/` 目录 → AppID 用测试号或填自己的 → 编译运行。后端地址在 `frontend/miniprogram/utils/config.js`（默认 127.0.0.1:8000，真机预览时改成电脑局域网 IP）。
+
+## 测试
+
+```
+python backend/tests/chat_smoke.py # 接口/对话测试（按脚本说明配置后执行）
 ```
 
 ## 换一家医院
 
-平面图放 `input/data_source/floor_maps/`，用 `asset/tools/map-annotator.html` 标注路网导出 JSON，
-改 `input/database/seed_data.py` 后重跑 `init_db.py`。`asset/` 与 `miniprogram/` 代码无需改动。
+1. 平面图放 `backend/data_source/floor_maps/`（floor1.jpg 起）；
+2. 浏览器打开 `frontend/admin/public/map-annotator.html`，逐层标注节点/连线，导出 JSON 放 `backend/data_source/nav_data/`；
+3. 改 `backend/database/seed_data.py`（科室/检查须知/用药常识/医生），跑 `init_db.py`。
+   `backend/` 其余代码与 `frontend/miniprogram/` 的代码不用动。
+
+## 下游模块对接
+
+系统产出（导诊结果/流程卡/导航路线/对话/挂号事件）统一经 `backend/output/bridge.py` 透传，
+事件格式见 `text/接口约定.md`。设置环境变量 `NEXT_MODULE_ENDPOINT` 即可实时推送。
 
 ## 常见问题
 
-- 启动报 WinError 10013：8000 端口被占用，关闭占用进程
-- 小程序提示"无法连接服务"：后端未启动或 `utils/config.js` 地址不对
-- AI 不回答：检查 `.env` 的 key；模型不可用时自动降级为知识库回答，流程推进不受影响
+- **启动报 WinError 10013**：8000 端口被占，关掉占用进程或换端口。
+- **小程序提示"无法连接服务"**：后端没启动，或 `utils/config.js` 的地址不对。
+- **AI 不回答/回答生硬**：检查 `.env` 的 key；大模型不可用时会自动降级为知识库兜底回答，流程推进不受影响。
+- **导入开发者工具报 AppID 不存在**：测试号只能在图形界面选，CLI 不支持。
 
 ## 致谢
 
-- 寻路设计参考 simpleroutingsvg（SVG 室内地图 + Dijkstra），源码附在 `simpleroutingsvg-master/`
+- 寻路设计参考 simpleroutingsvg（SVG 室内地图 + Dijkstra）
+- UI 风格参考开源医院挂号模板
 - 医生数据来自深圳大学医院公开信息
-
-## 执照
-
-MIT License，版权归属武汉光影流明科技有限公司。商用授权购买请联系。
