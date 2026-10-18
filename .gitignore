@@ -63,3 +63,6 @@ backend/output/outbox/
 *.tmp
 *.bak
 *.cache
+
+# Competition documents stay local
+text/
