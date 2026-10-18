@@ -19,7 +19,6 @@ AI 软件开发大赛项目：面向中老年人和儿童家长的就医全流�
 │   ├── admin/      Vue 管理端与平面图路网标注工具
 │   └── miniprogram/ 微信小程序（原生,7 页面,适老化 UI）
 ├── backend/output/ 输出桥接与下游事件落盘
-├── text/           比赛材料、方案文档与项目说明
 ├── README.md
 └── .gitignore
 ```
@@ -39,7 +38,7 @@ AI 软件开发大赛项目：面向中老年人和儿童家长的就医全流�
    ```
 
 2. **配置大模型**：
-   - **本地 Ollama（推荐）**：安装 Ollama → 运行 `ollama pull qwen2.5:7b` → 启动 `ollama serve`。项目已提供默认配置（http://127.0.0.1:11434/v1），无需修改 `.env`。
+   - **本地 Ollama（推荐）**：安装 Ollama → 运行 `ollama pull qwen2.5:7b` → 启动 `ollama serve`。将 `backend/.env.example` 复制为 `backend/.env`，默认配置地址为 `http://127.0.0.1:11434/v1`。
    - **云端 API**：编辑 `backend/.env`，填入你的 base_url / api_key / model（支持任意 OpenAI 兼容接口）。
 
 3. **初始化数据库**（可重复执行，每次重建）
@@ -67,7 +66,13 @@ AI 软件开发大赛项目：面向中老年人和儿童家长的就医全流�
 ## 测试
 
 ```
-python backend/tests/chat_smoke.py # 接口/对话测试（按脚本说明配置后执行）
+python -m unittest discover -s backend/tests -p "test_*.py"
+```
+
+需要验证 AI 对话接口时，再按 `backend/tests/chat_smoke.py` 中的说明配置模型服务后运行：
+
+```
+python backend/tests/chat_smoke.py
 ```
 
 ## 换一家医院
@@ -80,7 +85,7 @@ python backend/tests/chat_smoke.py # 接口/对话测试（按脚本说明配置
 ## 下游模块对接
 
 系统产出（导诊结果/流程卡/导航路线/对话/挂号事件）统一经 `backend/output/bridge.py` 透传，
-事件格式见 `text/接口约定.md`。设置环境变量 `NEXT_MODULE_ENDPOINT` 即可实时推送。
+事件格式见 `backend/output/bridge.py` 中的事件结构。设置环境变量 `NEXT_MODULE_ENDPOINT` 即可实时推送。
 
 ## 常见问题
 
